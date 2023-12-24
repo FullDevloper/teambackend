@@ -71,14 +71,16 @@ export const getConversations = async (req, res, next) => {
 };
 export const createGroup = async (req, res, next) => {
   const { name, users } = req.body;
+  console.log(users,"group")
+  console.log(name,"group")
   //add current user to users
   users.push(req.user.userId);
   if (!name || !users) {
-    throw createHttpError.BadRequest("Please fill all fields.");
+    throw createHttpError.BadRequest("Хоосон байна.");
   }
   if (users.length < 2) {
     throw createHttpError.BadRequest(
-      "Atleast 2 users are required to start a group chat."
+      "Уучлаарай 2 дээш хүн сонгоно уу?"
     );
   }
   let convoData = {
@@ -86,7 +88,7 @@ export const createGroup = async (req, res, next) => {
     users,
     isGroup: true,
     admin: req.user.userId,
-    picture: process.env.DEFAULT_GROUP_PICTURE,
+    picture: "",
   };
   try {
     const newConvo = await createConversation(convoData);

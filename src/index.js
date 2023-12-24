@@ -4,7 +4,7 @@ import app from "./app.js";
 import logger from "./configs/logger.config.js";
 import SocketServer from "./SocketServer.js";
 //env variables
-const { DATABASE_URL } = process.env;
+let DATABASE_URI ='mongodb+srv://rentsen:Mongol976%401@cluster0.hdy4qnr.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp'
 const PORT = process.env.PORT || 8000;
 
 //exit on mognodb error
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== "production") {
 
 //mongodb connection
 mongoose
-  .connect(DATABASE_URL, {
+  .connect(DATABASE_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -37,7 +37,7 @@ server = app.listen(PORT, () => {
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: process.env.CLIENT_ENDPOINT,
+    origin: "http://localhost:3000",
   },
 });
 io.on("connection", (socket) => {
